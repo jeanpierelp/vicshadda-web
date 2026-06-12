@@ -786,24 +786,50 @@ p {
 }
 
 @media (max-width: 575.98px) {
+  .navbar .container {
+    flex-wrap: nowrap;
+    gap: .25rem;
+  }
+
+  .navbar-brand {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+  }
+
   .brand-logo {
-    height: 46px;
-    width: 46px;
+    flex: 0 0 42px;
+    height: 42px;
+    width: 42px;
   }
 
   .brand-name {
-    font-size: 1rem;
-    max-width: 9.5rem;
+    font-size: .92rem;
+    max-width: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .mobile-nav-actions {
-    gap: .35rem;
+    flex: 0 0 auto;
+    gap: .2rem;
+    margin-left: 0 !important;
+  }
+
+  .mobile-social {
+    gap: 0;
   }
 
   .mobile-social a {
-    font-size: 1.18rem;
-    height: 36px;
-    width: 34px;
+    font-size: 1.08rem;
+    height: 34px;
+    width: 30px;
+  }
+
+  .navbar-toggler {
+    flex: 0 0 auto;
+    padding: .35rem .5rem;
   }
 
   .hero-section {
@@ -857,32 +883,43 @@ p {
   .package-button {
     align-self: stretch;
   }
+
+  .site-footer {
+    padding-bottom: 5.5rem;
+  }
+
+  .floating-whatsapp {
+    bottom: 16px;
+    height: 56px;
+    right: 16px;
+    width: 56px;
+  }
 }
 
 @media (max-width: 420px) {
   .navbar-brand {
-    gap: .35rem !important;
+    gap: .3rem !important;
     margin-right: 0;
   }
 
   .brand-logo {
-    height: 40px;
-    width: 40px;
+    flex-basis: 38px;
+    height: 38px;
+    width: 38px;
   }
 
   .brand-name {
-    font-size: .88rem;
-    max-width: 7.25rem;
+    font-size: .78rem;
   }
 
   .mobile-social a {
-    font-size: 1.02rem;
-    height: 32px;
-    width: 29px;
+    font-size: 1rem;
+    height: 30px;
+    width: 27px;
   }
 
   .navbar-toggler {
-    padding: .32rem .45rem;
+    padding: .28rem .4rem;
   }
 }
 

@@ -1,0 +1,12 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #fff;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}

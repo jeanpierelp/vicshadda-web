@@ -1,0 +1,17 @@
+# Dependencies and local npm cache
+node_modules/
+.npm-cache/
+
+# Angular build output
+dist/
+.angular/
+
+# Local editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

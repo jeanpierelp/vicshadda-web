@@ -110,6 +110,15 @@ export class AppComponent implements AfterViewInit {
     this.selectedCategory = category;
   }
 
+  closeMobileMenu(): void {
+    const menu = document.getElementById('mainNav');
+    const toggler = document.querySelector<HTMLButtonElement>('.navbar-toggler');
+    if (!menu?.classList.contains('show')) return;
+    menu.classList.remove('show');
+    toggler?.classList.add('collapsed');
+    toggler?.setAttribute('aria-expanded', 'false');
+  }
+
   scrollToPackages(): void {
     window.setTimeout(() => document.getElementById('paquetes')?.scrollIntoView({ behavior: 'smooth' }));
   }

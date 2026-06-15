@@ -904,8 +904,38 @@ p {
 
 @media (max-width: 575.98px) {
   .navbar .container {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: .25rem;
+  }
+
+  .navbar-collapse {
+    background: #fff;
+    border-top: 1px solid #f0e5f7;
+    flex-basis: 100%;
+    margin-top: .65rem;
+    order: 3;
+    padding: .45rem 0 .65rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar-nav {
+    align-items: center;
+    gap: .15rem;
+  }
+
+  .navbar-nav .nav-link {
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 1rem;
+    justify-content: center;
+    min-width: 120px;
+    padding: .45rem 1rem;
+  }
+
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link:focus {
+    background: #f8efff;
   }
 
   .navbar-brand {

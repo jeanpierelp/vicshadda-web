@@ -4,6 +4,17 @@
     window.scrollTo(0, 0);
   }
 
+  document.querySelectorAll('#mainNav .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const menu = document.getElementById('mainNav');
+      const toggler = document.querySelector('.navbar-toggler');
+      if (!menu?.classList.contains('show')) return;
+      menu.classList.remove('show');
+      toggler?.classList.add('collapsed');
+      toggler?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   const whatsapp = '51997234429';
   const base = 'assets/packages/';
   const publicBase = 'https://jeanpierelp.github.io/vicshadda-web/preview/assets/packages/';

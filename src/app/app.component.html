@@ -99,36 +99,67 @@
 
   <section class="packages-section" id="paquetes">
     <div class="container">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-5">
-          <span class="eyebrow"><i class="bi bi-gift-fill"></i> Encuentra tu celebración</span>
-          <h2>Descubre todo lo que podemos preparar para tu fiesta</h2>
-          <p>Explora las opciones disponibles y conoce lo que puede incluir cada experiencia. Cuando encuentres la ideal para tu evento, escríbenos por WhatsApp para personalizarla y reservar tu fecha.</p>
-          <a class="btn btn-whatsapp btn-lg" [href]="whatsappUrl" target="_blank" rel="noopener">
-            <i class="bi bi-whatsapp"></i>
-            Consultar disponibilidad
-          </a>
+      <div class="package-intro text-center mx-auto">
+        <span class="eyebrow"><i class="bi bi-gift-fill"></i> Catálogo de paquetes</span>
+        <h2>Elige la experiencia ideal para tu celebración</h2>
+        <p>Compara qué incluye cada opción, selecciona una duración y envíanos tu elección por WhatsApp.</p>
+      </div>
+
+      <nav class="package-nav" aria-label="Categorías de paquetes">
+        <a *ngFor="let category of packageCategories" [href]="'#' + category.id">{{ category.title }}</a>
+        <a href="#adicionales">Adicionales</a>
+      </nav>
+
+      <section class="package-group" *ngFor="let category of packageCategories" [id]="category.id">
+        <div class="package-group-heading">
+          <div>
+            <span>Opciones Vicshadda</span>
+            <h3>{{ category.title }}</h3>
+          </div>
+          <p>{{ category.description }}</p>
         </div>
 
-        <div class="col-lg-7">
-          <div class="row g-3">
-            <div class="col-md-6 col-xl-4" *ngFor="let pack of packages">
-              <article class="package-card h-100">
-                <span>{{ pack.badge }}</span>
-                <h3>{{ pack.title }}</h3>
-                <ul>
-                  <li *ngFor="let item of pack.items"><i class="bi bi-check-circle-fill"></i>{{ item }}</li>
-                </ul>
-                <a class="package-button" [href]="packageWhatsappUrl(pack.title)" target="_blank" rel="noopener">
+        <div class="package-grid">
+          <article class="package-card" *ngFor="let pack of packagesFor(category.id)">
+            <a class="package-image" [href]="pack.image" target="_blank" rel="noopener" title="Ver flyer completo">
+              <img [src]="pack.image" [alt]="'Flyer de ' + pack.title" loading="lazy">
+              <span><i class="bi bi-arrows-fullscreen"></i> Ver flyer</span>
+            </a>
+            <div class="package-body">
+              <p class="package-kicker">{{ pack.subtitle }}</p>
+              <h4>{{ pack.title }}</h4>
+              <ul class="package-features">
+                <li *ngFor="let feature of pack.features"><i class="bi bi-check2"></i>{{ feature }}</li>
+              </ul>
+              <p class="package-note" *ngIf="pack.note">{{ pack.note }}</p>
+              <div class="price-options" aria-label="Precios por duración">
+                <a *ngFor="let option of pack.prices" [href]="packageWhatsappUrl(pack, option)" target="_blank" rel="noopener">
+                  <span>{{ option.duration }}</span>
+                  <strong>{{ option.price }}</strong>
                   <i class="bi bi-whatsapp"></i>
-                  Elegir paquete
                 </a>
-              </article>
+              </div>
             </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="extras-section" id="adicionales">
+        <div class="extras-copy">
+          <span class="eyebrow"><i class="bi bi-plus-circle-fill"></i> Personaliza tu paquete</span>
+          <h3>Servicios adicionales</h3>
+          <p>Agrega estos servicios a tu paquete. La disponibilidad y movilidad se confirman por WhatsApp.</p>
+          <div class="extras-actions">
+            <a href="assets/packages/photo_5008009138352622584_y.jpg" target="_blank" rel="noopener"><i class="bi bi-image"></i> Ver flyer</a>
+            <a href="assets/packages/photo_5008009138352622579_y.jpg" target="_blank" rel="noopener"><i class="bi bi-stars"></i> Ver más servicios</a>
           </div>
         </div>
+        <div class="extras-list">
+          <div *ngFor="let extra of extras"><span>{{ extra.name }}</span><strong>{{ extra.price }}</strong></div>
+        </div>
+      </section>
+      <p class="package-disclaimer">Precios tomados de los flyers proporcionados. Confirma fecha, movilidad, temática y disponibilidad antes de reservar.</p>
       </div>
-    </div>
   </section>
 
   <section class="gallery-section" id="galeria">

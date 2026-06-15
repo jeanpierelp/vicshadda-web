@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 
 type Service = { icon: string; title: string; text: string; tone: string };
@@ -17,7 +16,6 @@ type PackageCategory = { id: string; title: string; description: string };
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -39,7 +37,7 @@ export class AppComponent implements AfterViewInit {
     { id: 'completos', title: 'Shows completos y personajes', description: 'Bailarinas, muñecos, DJ y producciones de mayor formato.' },
     { id: 'baby-shower', title: 'Baby shower y revelación', description: 'Dinámicas familiares, regalos, bailes, fotos y hora loca.' },
     { id: 'adultos', title: 'Shows para adultos', description: 'Animación, baile, juegos, hora loca y hora chola para celebrar entre adultos.' },
-    { id: 'especiales', title: 'Colegios, visitas y fuera de Trujillo', description: 'Opciones para instituciones, visitas sorpresa y eventos fuera de la ciudad.' }
+    { id: 'especiales', title: 'Colegios y fuera de Trujillo', description: 'Paquetes para instituciones, visitas sorpresa y eventos fuera de la ciudad.' }
   ];
 
   readonly packages: PackageItem[] = [

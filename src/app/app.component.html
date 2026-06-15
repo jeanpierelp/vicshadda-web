@@ -19,19 +19,7 @@
     <div class="collapse navbar-collapse" id="mainNav">
       <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
         <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-        <li class="nav-item dropdown package-menu">
-          <a class="nav-link dropdown-toggle" href="#paquetes" role="button" data-bs-toggle="dropdown" aria-expanded="false">Paquetes</a>
-          <div class="dropdown-menu dropdown-menu-end package-dropdown">
-            <div class="package-dropdown-grid">
-              <section *ngFor="let category of packageCategories">
-                <button type="button" class="package-dropdown-title" (click)="selectCategory(category.id); scrollToPackages()">{{ category.title }}</button>
-              </section>
-              <section>
-                <button type="button" class="package-dropdown-title" (click)="selectCategory('adicionales'); scrollToPackages()">Servicios adicionales</button>
-              </section>
-            </div>
-          </div>
-        </li>
+        <li class="nav-item"><a class="nav-link" href="#paquetes">Paquetes</a></li>
         <li class="nav-item"><a class="nav-link" href="#galeria">Galería</a></li>
         <li class="nav-item desktop-social" aria-label="Redes sociales">
           <a href="https://www.facebook.com/share/1AeQqBMarR/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><i class="bi bi-facebook"></i></a>
@@ -93,18 +81,20 @@
       </div>
 
       <div class="row g-4">
-        <div class="col-md-6" *ngFor="let service of services">
-          <article class="service-card h-100" [class]="'tone-' + service.tone">
-            <div class="balloon-stage">
-              <div class="service-icon"><i class="bi" [class]="service.icon"></i></div>
-              <span class="balloon-burst"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
-            </div>
-            <div>
-              <h3>{{ service.title }}</h3>
-              <p>{{ service.text }}</p>
-            </div>
-          </article>
-        </div>
+        @for (service of services; track service.title) {
+          <div class="col-md-6">
+            <article class="service-card h-100" [class]="'tone-' + service.tone">
+              <div class="balloon-stage">
+                <div class="service-icon"><i class="bi" [class]="service.icon"></i></div>
+                <span class="balloon-burst"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></span>
+              </div>
+              <div>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.text }}</p>
+              </div>
+            </article>
+          </div>
+        }
       </div>
     </div>
   </section>
@@ -118,12 +108,15 @@
       </div>
 
       <nav class="package-nav" aria-label="Categorías de paquetes">
-        <button type="button" *ngFor="let category of packageCategories" [class.active]="selectedCategory === category.id" (click)="selectCategory(category.id)">{{ category.title }}</button>
+        @for (category of packageCategories; track category.id) {
+          <button type="button" [class.active]="selectedCategory === category.id" (click)="selectCategory(category.id)">{{ category.title }}</button>
+        }
         <button type="button" [class.active]="selectedCategory === 'adicionales'" (click)="selectCategory('adicionales')">Adicionales</button>
       </nav>
 
-      <ng-container *ngFor="let category of packageCategories">
-        <section class="package-group" *ngIf="selectedCategory === category.id" [id]="category.id">
+      @for (category of packageCategories; track category.id) {
+        @if (selectedCategory === category.id) {
+        <section class="package-group" [id]="category.id">
           <div class="package-group-heading">
             <div>
               <span>Opciones Vicshadda</span>
@@ -133,7 +126,8 @@
           </div>
 
           <div class="package-grid">
-            <article class="package-card" *ngFor="let pack of packagesFor(category.id)" [id]="packageId(pack)">
+            @for (pack of packagesFor(category.id); track pack.title) {
+            <article class="package-card" [id]="packageId(pack)">
               <a class="package-image" [href]="pack.image" target="_blank" rel="noopener" title="Ver flyer completo">
                 <img [src]="pack.image" [alt]="'Flyer de ' + pack.title" loading="lazy">
                 <span><i class="bi bi-arrows-fullscreen"></i> Ver flyer</span>
@@ -142,26 +136,35 @@
                 <p class="package-kicker">{{ pack.subtitle }}</p>
                 <h4>{{ pack.title }}</h4>
                 <ul class="package-features">
-                  <li *ngFor="let feature of pack.features"><i class="bi bi-check2"></i>{{ feature }}</li>
+                  @for (feature of pack.features; track feature) {
+                    <li><i class="bi bi-check2"></i>{{ feature }}</li>
+                  }
                 </ul>
                 <div class="package-notes">
                   <p class="package-note"><i class="bi bi-car-front-fill"></i> No incluye movilidad.</p>
-                  <p class="package-note package-note-special" *ngIf="pack.note">{{ pack.note }}</p>
+                  @if (pack.note) {
+                    <p class="package-note package-note-special">{{ pack.note }}</p>
+                  }
                 </div>
                 <div class="price-options" aria-label="Precios por duración">
-                  <a *ngFor="let option of pack.prices" [href]="packageWhatsappUrl(pack, option)" target="_blank" rel="noopener">
+                  @for (option of pack.prices; track option.duration) {
+                  <a [href]="packageWhatsappUrl(pack, option)" target="_blank" rel="noopener">
                     <span>{{ option.duration }}</span>
                     <strong>{{ option.price }}</strong>
                     <i class="bi bi-whatsapp"></i>
                   </a>
+                  }
                 </div>
               </div>
             </article>
+            }
           </div>
         </section>
-      </ng-container>
+        }
+      }
 
-      <section class="extras-section" id="adicionales" *ngIf="selectedCategory === 'adicionales'">
+      @if (selectedCategory === 'adicionales') {
+      <section class="extras-section" id="adicionales">
         <div class="extras-copy">
           <span class="eyebrow"><i class="bi bi-plus-circle-fill"></i> Personaliza tu paquete</span>
           <h3>Servicios adicionales</h3>
@@ -172,9 +175,12 @@
           </div>
         </div>
         <div class="extras-list">
-          <div *ngFor="let extra of extras"><span>{{ extra.name }}</span><strong>{{ extra.price }}</strong></div>
+          @for (extra of extras; track extra.name) {
+            <div><span>{{ extra.name }}</span><strong>{{ extra.price }}</strong></div>
+          }
         </div>
       </section>
+      }
       </div>
   </section>
 
@@ -186,11 +192,13 @@
       </div>
 
       <div class="row g-4">
-        <div class="col-lg-6" *ngFor="let image of gallery">
-          <figure class="gallery-item">
-            <img [src]="image.src" [alt]="image.alt" class="img-fluid">
-          </figure>
-        </div>
+        @for (image of gallery; track image.src) {
+          <div class="col-lg-6">
+            <figure class="gallery-item">
+              <img [src]="image.src" [alt]="image.alt" class="img-fluid">
+            </figure>
+          </div>
+        }
       </div>
     </div>
   </section>

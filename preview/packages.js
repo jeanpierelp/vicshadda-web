@@ -15,7 +15,7 @@
     ['completos', 'Shows completos y personajes', 'Bailarinas, muñecos, DJ y producciones de mayor formato.'],
     ['baby-shower', 'Baby shower y revelación', 'Dinámicas familiares, regalos, bailes, fotos y hora loca.'],
     ['adultos', 'Shows para adultos', 'Animación, baile, juegos, hora loca y hora chola para celebrar entre adultos.'],
-    ['especiales', 'Colegios, visitas y fuera de Trujillo', 'Opciones para instituciones, visitas sorpresa y eventos fuera de la ciudad.']
+    ['especiales', 'Colegios y fuera de Trujillo', 'Paquetes para instituciones, visitas sorpresa y eventos fuera de la ciudad.']
   ];
 
   const packages = [
@@ -86,8 +86,7 @@
 
   const catalog = document.querySelector('#packageCatalog');
   const extras = document.querySelector('#adicionales');
-  const dropdown = document.querySelector('#packageDropdown');
-  if (!catalog || !extras || !dropdown) return;
+  if (!catalog || !extras) return;
 
   const renderCatalog = categoryId => {
     document.querySelectorAll('[data-package-category]').forEach(button => {
@@ -108,26 +107,10 @@
       </section>`;
   };
 
-  dropdown.innerHTML = categories.map(([id, title]) => `
-    <section>
-      <button type="button" class="package-dropdown-title" data-menu-category="${id}">${title}</button>
-    </section>`).join('') + `
-    <section><button type="button" class="package-dropdown-title" data-menu-category="adicionales">Servicios adicionales</button></section>`;
-
   document.addEventListener('click', event => {
     const categoryButton = event.target.closest('[data-package-category]');
     if (categoryButton) {
       renderCatalog(categoryButton.dataset.packageCategory);
-      return;
-    }
-    const menuButton = event.target.closest('[data-menu-category]');
-    if (!menuButton) return;
-    const categoryId = menuButton.dataset.menuCategory;
-    renderCatalog(categoryId);
-    document.querySelector('#paquetes')?.scrollIntoView({ behavior: 'smooth' });
-    const target = menuButton.dataset.packageTarget;
-    if (target) {
-      window.setTimeout(() => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
     }
   });
 

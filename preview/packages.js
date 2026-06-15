@@ -1,4 +1,9 @@
 (() => {
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }
+
   const whatsapp = '51997234429';
   const base = 'assets/packages/';
   const publicBase = 'https://jeanpierelp.github.io/vicshadda-web/preview/assets/packages/';
@@ -9,6 +14,7 @@
     ['infantiles', 'Paquetes infantiles', 'Desde un show rápido hasta animación con sonido, DJ y burbujas.'],
     ['completos', 'Shows completos y personajes', 'Bailarinas, muñecos, DJ y producciones de mayor formato.'],
     ['baby-shower', 'Baby shower y revelación', 'Dinámicas familiares, regalos, bailes, fotos y hora loca.'],
+    ['adultos', 'Shows para adultos', 'Animación, baile, juegos, hora loca y hora chola para celebrar entre adultos.'],
     ['especiales', 'Colegios, visitas y fuera de Trujillo', 'Opciones para instituciones, visitas sorpresa y eventos fuera de la ciudad.']
   ];
 
@@ -36,10 +42,12 @@
     p('completos','Animadora + muñeco + DJ','Show con personaje','photo_5008009138352622570_y.jpg',['Muñeco sorpresa','Juegos y títeres','DJ y luces','Sesión de fotos'],[['1 h 30 min','S/220'],['2 horas','S/240'],['2 h 25 min','S/260']]),
     p('completos','Animadora, DJ, sonido y muñeco','Producción con personaje','photo_5008009138352622573_y.jpg',['Muñeco sorpresa','Equipo de sonido','DJ y luces','Hora loca'],[['1 hora','S/240'],['1 h 30 min','S/260'],['2 horas','S/280'],['2 h 30 min','S/300']]),
 
-    p('baby-shower','Baby shower con animadora','También para revelación','photo_5008009138352622581_y.jpg',['Dinámicas familiares','Entrega de regalos','Hora loca','Luces LED'],[['1 hora','S/100'],['1 h 30 min','S/120'],['2 horas','S/140']],'No incluye movilidad.'),
-    p('baby-shower','Baby shower con animadora + DJ','También para revelación','photo_5008009138352622580_y.jpg',['Palabras de familiares','Juegos grupales','Hora loca','DJ y micrófono'],[['1 hora','S/140'],['1 h 30 min','S/160'],['2 horas','S/180']],'No incluye movilidad.'),
-    p('baby-shower','Baby shower con bailarina','Animadora, DJ y bailarina','photo_5008009138352622582_y.jpg',['Bailarina','Juegos grupales','DJ y micrófono','Luces o burbujas'],[['1 h 30 min','S/230'],['2 horas','S/250']],'No incluye movilidad.'),
-    p('baby-shower','Baby shower con muñeco','Animadora, DJ y personaje','photo_5008009138352622583_y.jpg',['Muñeco sorpresa','Dinámicas familiares','DJ y micrófono','Luces o burbujas'],[['1 h 30 min','S/270'],['2 horas','S/290']],'No incluye movilidad.'),
+    p('baby-shower','Baby shower con animadora','También para revelación','photo_5008009138352622581_y.jpg',['Dinámicas familiares','Entrega de regalos','Hora loca','Luces LED'],[['1 hora','S/100'],['1 h 30 min','S/120'],['2 horas','S/140']]),
+    p('baby-shower','Baby shower con animadora + DJ','También para revelación','photo_5008009138352622580_y.jpg',['Palabras de familiares','Juegos grupales','Hora loca','DJ y micrófono'],[['1 hora','S/140'],['1 h 30 min','S/160'],['2 horas','S/180']]),
+    p('baby-shower','Baby shower con bailarina','Animadora, DJ y bailarina','photo_5008009138352622582_y.jpg',['Bailarina','Juegos grupales','DJ y micrófono','Luces o burbujas'],[['1 h 30 min','S/230'],['2 horas','S/250']]),
+    p('baby-shower','Baby shower con muñeco','Animadora, DJ y personaje','photo_5008009138352622583_y.jpg',['Muñeco sorpresa','Dinámicas familiares','DJ y micrófono','Luces o burbujas'],[['1 h 30 min','S/270'],['2 horas','S/290']]),
+
+    p('adultos','Show para adultos','Animadora + DJ','photo_5008009138352622611_y.jpg',['Bailes para todos','Juegos','Hora loca y hora chola','Sesión de fotos'],[['1 hora','S/160'],['1 h 30 min','S/180'],['2 horas','S/200']],'Incluye micrófono y bazuca de burbujas.'),
 
     p('especiales','Animadora para jardín o colegio','Show para instituciones','photo_5008009138352622577_y.jpg',['Juegos educativos','Cantijuegos y títeres','Hora loca','Sesión de fotos'],[['1 hora','S/80'],['1 h 30 min','S/100'],['2 horas','S/120'],['2 h 15 min','S/140']],'DJ adicional: S/50'),
     p('especiales','Visita de muñeco sorpresa','Aparición especial para el cumpleaños','photo_5008009138352622578_y.jpg',['Entrada y baile','Mini hora loca','Piñata y cumpleaños','Sesión de fotos'],[['30 minutos','S/130'],['40 minutos','S/150'],['1 hora','S/170']]),
@@ -55,8 +63,9 @@
     return `https://wa.me/${whatsapp}?text=${encodeURIComponent(message)}`;
   };
 
+  const packageId = pack => `paquete-${pack.image.replace('.jpg', '')}`;
   const card = pack => `
-    <article class="package-card">
+    <article class="package-card" id="${packageId(pack)}">
       <a class="package-image" href="${base}${pack.image}" target="_blank" rel="noopener" title="Ver flyer completo">
         <img src="${base}${pack.image}" alt="Flyer de ${escapeHtml(pack.title)}" loading="lazy">
         <span><i class="bi bi-arrows-fullscreen"></i> Ver flyer</span>
@@ -65,7 +74,10 @@
         <p class="package-kicker">${escapeHtml(pack.subtitle)}</p>
         <h4>${escapeHtml(pack.title)}</h4>
         <ul class="package-features">${pack.features.map(feature => `<li><i class="bi bi-check2"></i>${escapeHtml(feature)}</li>`).join('')}</ul>
-        ${pack.note ? `<p class="package-note">${escapeHtml(pack.note)}</p>` : ''}
+        <div class="package-notes">
+          <p class="package-note"><i class="bi bi-car-front-fill"></i> No incluye movilidad.</p>
+          ${pack.note ? `<p class="package-note package-note-special">${escapeHtml(pack.note)}</p>` : ''}
+        </div>
         <div class="price-options" aria-label="Precios por duración">
           ${pack.prices.map(option => `<a href="${whatsappUrl(pack, option)}" target="_blank" rel="noopener"><span>${escapeHtml(option[0])}</span><strong>${escapeHtml(option[1])}</strong><i class="bi bi-whatsapp"></i></a>`).join('')}
         </div>
@@ -73,10 +85,51 @@
     </article>`;
 
   const catalog = document.querySelector('#packageCatalog');
-  if (!catalog) return;
-  catalog.innerHTML = categories.map(([id, title, description]) => `
-    <section class="package-group" id="${id}">
-      <div class="package-group-heading"><div><span>Opciones Vicshadda</span><h3>${title}</h3></div><p>${description}</p></div>
-      <div class="package-grid">${packages.filter(pack => pack.category === id).map(card).join('')}</div>
-    </section>`).join('');
+  const extras = document.querySelector('#adicionales');
+  const dropdown = document.querySelector('#packageDropdown');
+  if (!catalog || !extras || !dropdown) return;
+
+  const renderCatalog = categoryId => {
+    document.querySelectorAll('[data-package-category]').forEach(button => {
+      button.classList.toggle('active', button.dataset.packageCategory === categoryId);
+    });
+    extras.hidden = categoryId !== 'adicionales';
+    if (categoryId === 'adicionales') {
+      catalog.innerHTML = '';
+      return;
+    }
+    const category = categories.find(([id]) => id === categoryId);
+    if (!category) return;
+    const [id, title, description] = category;
+    catalog.innerHTML = `
+      <section class="package-group" id="${id}">
+        <div class="package-group-heading"><div><span>Opciones Vicshadda</span><h3>${title}</h3></div><p>${description}</p></div>
+        <div class="package-grid">${packages.filter(pack => pack.category === id).map(card).join('')}</div>
+      </section>`;
+  };
+
+  dropdown.innerHTML = categories.map(([id, title]) => `
+    <section>
+      <button type="button" class="package-dropdown-title" data-menu-category="${id}">${title}</button>
+    </section>`).join('') + `
+    <section><button type="button" class="package-dropdown-title" data-menu-category="adicionales">Servicios adicionales</button></section>`;
+
+  document.addEventListener('click', event => {
+    const categoryButton = event.target.closest('[data-package-category]');
+    if (categoryButton) {
+      renderCatalog(categoryButton.dataset.packageCategory);
+      return;
+    }
+    const menuButton = event.target.closest('[data-menu-category]');
+    if (!menuButton) return;
+    const categoryId = menuButton.dataset.menuCategory;
+    renderCatalog(categoryId);
+    document.querySelector('#paquetes')?.scrollIntoView({ behavior: 'smooth' });
+    const target = menuButton.dataset.packageTarget;
+    if (target) {
+      window.setTimeout(() => document.getElementById(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+    }
+  });
+
+  renderCatalog('infantiles');
 })();

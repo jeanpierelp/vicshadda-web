@@ -32,7 +32,12 @@
       <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
           <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
-          <li class="nav-item"><a class="nav-link" href="#paquetes">Paquetes</a></li>
+          <li class="nav-item dropdown package-menu">
+            <a class="nav-link dropdown-toggle" href="#paquetes" role="button" data-bs-toggle="dropdown" aria-expanded="false">Paquetes</a>
+            <div class="dropdown-menu dropdown-menu-end package-dropdown">
+              <div class="package-dropdown-grid" id="packageDropdown"></div>
+            </div>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#galeria">Galería</a></li>
           <li class="nav-item desktop-social" aria-label="Redes sociales">
             <a href="https://www.facebook.com/share/1AeQqBMarR/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><i class="bi bi-facebook"></i></a>
@@ -129,14 +134,15 @@
           <p>Compara qué incluye cada opción, selecciona una duración y envíanos tu elección por WhatsApp.</p>
         </div>
         <nav class="package-nav" aria-label="Categorías de paquetes">
-          <a href="#infantiles">Paquetes infantiles</a>
-          <a href="#completos">Shows completos</a>
-          <a href="#baby-shower">Baby shower y revelación</a>
-          <a href="#especiales">Opciones especiales</a>
-          <a href="#adicionales">Adicionales</a>
+          <button type="button" class="active" data-package-category="infantiles">Paquetes infantiles</button>
+          <button type="button" data-package-category="completos">Shows completos</button>
+          <button type="button" data-package-category="baby-shower">Baby shower y revelación</button>
+          <button type="button" data-package-category="adultos">Shows para adultos</button>
+          <button type="button" data-package-category="especiales">Opciones especiales</button>
+          <button type="button" data-package-category="adicionales">Adicionales</button>
         </nav>
         <div id="packageCatalog"></div>
-        <section class="extras-section" id="adicionales">
+        <section class="extras-section" id="adicionales" hidden>
           <div class="extras-copy">
             <span class="eyebrow"><i class="bi bi-plus-circle-fill"></i> Personaliza tu paquete</span>
             <h3>Servicios adicionales</h3>
@@ -155,7 +161,6 @@
             <div><span>DJ</span><strong>S/50</strong></div>
           </div>
         </section>
-        <p class="package-disclaimer">Precios tomados de los flyers proporcionados. Confirma fecha, movilidad, temática y disponibilidad antes de reservar.</p>
       </div>
     </section>
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 
 type Service = { icon: string; title: string; text: string; tone: string };
 type PriceOption = { duration: string; price: string };
@@ -21,10 +21,11 @@ type PackageCategory = { id: string; title: string; description: string };
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   readonly whatsapp = '51997234429';
   readonly phoneLabel = '997 234 429';
   readonly whatsappText = encodeURIComponent('Hola Vicshadda Producciones, quiero información para reservar mi evento.');
+  selectedCategory = 'infantiles';
 
   readonly services: Service[] = [
     { icon: 'bi-stars', title: 'Show infantil', text: 'Animación, juegos, dinámicas, magia, caritas pintadas y mucha energía para cumpleaños.', tone: 'pink' },
@@ -37,6 +38,7 @@ export class AppComponent {
     { id: 'infantiles', title: 'Paquetes infantiles', description: 'Desde un show rápido hasta animación con sonido, DJ y burbujas.' },
     { id: 'completos', title: 'Shows completos y personajes', description: 'Bailarinas, muñecos, DJ y producciones de mayor formato.' },
     { id: 'baby-shower', title: 'Baby shower y revelación', description: 'Dinámicas familiares, regalos, bailes, fotos y hora loca.' },
+    { id: 'adultos', title: 'Shows para adultos', description: 'Animación, baile, juegos, hora loca y hora chola para celebrar entre adultos.' },
     { id: 'especiales', title: 'Colegios, visitas y fuera de Trujillo', description: 'Opciones para instituciones, visitas sorpresa y eventos fuera de la ciudad.' }
   ];
 
@@ -64,10 +66,12 @@ export class AppComponent {
     this.pack('completos', 'Animadora + muñeco + DJ', 'Show con personaje', 'photo_5008009138352622570_y.jpg', ['Muñeco sorpresa', 'Juegos y títeres', 'DJ y luces', 'Sesión de fotos'], [['1 h 30 min', 'S/220'], ['2 horas', 'S/240'], ['2 h 25 min', 'S/260']]),
     this.pack('completos', 'Animadora, DJ, sonido y muñeco', 'Producción con personaje', 'photo_5008009138352622573_y.jpg', ['Muñeco sorpresa', 'Equipo de sonido', 'DJ y luces', 'Hora loca'], [['1 hora', 'S/240'], ['1 h 30 min', 'S/260'], ['2 horas', 'S/280'], ['2 h 30 min', 'S/300']]),
 
-    this.pack('baby-shower', 'Baby shower con animadora', 'También para revelación', 'photo_5008009138352622581_y.jpg', ['Dinámicas familiares', 'Entrega de regalos', 'Hora loca', 'Luces LED'], [['1 hora', 'S/100'], ['1 h 30 min', 'S/120'], ['2 horas', 'S/140']], 'No incluye movilidad.'),
-    this.pack('baby-shower', 'Baby shower con animadora + DJ', 'También para revelación', 'photo_5008009138352622580_y.jpg', ['Palabras de familiares', 'Juegos grupales', 'Hora loca', 'DJ y micrófono'], [['1 hora', 'S/140'], ['1 h 30 min', 'S/160'], ['2 horas', 'S/180']], 'No incluye movilidad.'),
-    this.pack('baby-shower', 'Baby shower con bailarina', 'Animadora, DJ y bailarina', 'photo_5008009138352622582_y.jpg', ['Bailarina', 'Juegos grupales', 'DJ y micrófono', 'Luces o burbujas'], [['1 h 30 min', 'S/230'], ['2 horas', 'S/250']], 'No incluye movilidad.'),
-    this.pack('baby-shower', 'Baby shower con muñeco', 'Animadora, DJ y personaje', 'photo_5008009138352622583_y.jpg', ['Muñeco sorpresa', 'Dinámicas familiares', 'DJ y micrófono', 'Luces o burbujas'], [['1 h 30 min', 'S/270'], ['2 horas', 'S/290']], 'No incluye movilidad.'),
+    this.pack('baby-shower', 'Baby shower con animadora', 'También para revelación', 'photo_5008009138352622581_y.jpg', ['Dinámicas familiares', 'Entrega de regalos', 'Hora loca', 'Luces LED'], [['1 hora', 'S/100'], ['1 h 30 min', 'S/120'], ['2 horas', 'S/140']]),
+    this.pack('baby-shower', 'Baby shower con animadora + DJ', 'También para revelación', 'photo_5008009138352622580_y.jpg', ['Palabras de familiares', 'Juegos grupales', 'Hora loca', 'DJ y micrófono'], [['1 hora', 'S/140'], ['1 h 30 min', 'S/160'], ['2 horas', 'S/180']]),
+    this.pack('baby-shower', 'Baby shower con bailarina', 'Animadora, DJ y bailarina', 'photo_5008009138352622582_y.jpg', ['Bailarina', 'Juegos grupales', 'DJ y micrófono', 'Luces o burbujas'], [['1 h 30 min', 'S/230'], ['2 horas', 'S/250']]),
+    this.pack('baby-shower', 'Baby shower con muñeco', 'Animadora, DJ y personaje', 'photo_5008009138352622583_y.jpg', ['Muñeco sorpresa', 'Dinámicas familiares', 'DJ y micrófono', 'Luces o burbujas'], [['1 h 30 min', 'S/270'], ['2 horas', 'S/290']]),
+
+    this.pack('adultos', 'Show para adultos', 'Animadora + DJ', 'photo_5008009138352622611_y.jpg', ['Bailes para todos', 'Juegos', 'Hora loca y hora chola', 'Sesión de fotos'], [['1 hora', 'S/160'], ['1 h 30 min', 'S/180'], ['2 horas', 'S/200']], 'Incluye micrófono y bazuca de burbujas.'),
 
     this.pack('especiales', 'Animadora para jardín o colegio', 'Show para instituciones', 'photo_5008009138352622577_y.jpg', ['Juegos educativos', 'Cantijuegos y títeres', 'Hora loca', 'Sesión de fotos'], [['1 hora', 'S/80'], ['1 h 30 min', 'S/100'], ['2 horas', 'S/120'], ['2 h 15 min', 'S/140']], 'DJ adicional: S/50'),
     this.pack('especiales', 'Visita de muñeco sorpresa', 'Aparición especial para el cumpleaños', 'photo_5008009138352622578_y.jpg', ['Entrada y baile', 'Mini hora loca', 'Piñata y cumpleaños', 'Sesión de fotos'], [['30 minutos', 'S/130'], ['40 minutos', 'S/150'], ['1 hora', 'S/170']]),
@@ -89,12 +93,38 @@ export class AppComponent {
     { src: 'assets/show 2.jpeg', alt: 'Servicios de show infantil, animación, muñecos y burbujas Vicshadda' }
   ];
 
+  ngAfterViewInit(): void {
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    window.scrollTo({ top: 0, left: 0 });
+  }
+
   get whatsappUrl(): string {
     return `https://wa.me/${this.whatsapp}?text=${this.whatsappText}`;
   }
 
   packagesFor(category: string): PackageItem[] {
     return this.packages.filter(item => item.category === category);
+  }
+
+  selectCategory(category: string): void {
+    this.selectedCategory = category;
+  }
+
+  scrollToPackages(): void {
+    window.setTimeout(() => document.getElementById('paquetes')?.scrollIntoView({ behavior: 'smooth' }));
+  }
+
+  selectPackage(pack: PackageItem): void {
+    this.selectedCategory = pack.category;
+    window.setTimeout(() => {
+      document.getElementById(this.packageId(pack))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  packageId(pack: PackageItem): string {
+    return `paquete-${pack.image.split('/').pop()?.replace('.jpg', '')}`;
   }
 
   packageWhatsappUrl(pack: PackageItem, option?: PriceOption): string {
